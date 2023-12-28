@@ -15,5 +15,5 @@ export function sameCase(a: string, b: string): number {
 
   const [firstChar, secondChar] = isSameCase;
 
-  return firstChar === secondChar ? 1 : 0; // your code here
+  return firstChar === secondChar ? 1 : 0;
 }

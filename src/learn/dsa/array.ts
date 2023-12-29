@@ -115,3 +115,116 @@ const rotateBetter = (arr: number[], k: number) => {
 };
 
 rotateBetter([1, 2, 3, 4, 5, 6, 7], 3);
+
+/*
+  3. Multidimensional array
+
+  Tablice o większym deep niż 1. Czyli tablica w tablicy.
+
+  Przykład -> [[12,3],[4]]
+*/
+
+const multidimensional: number[][] = [[1, 3], [2]];
+
+/*
+  Iterowanie po takiej tablicy odbywa się za pomocą [a][b] czyli [0][0].
+
+  Przykładowa iteracja po całej tablicy.
+*/
+
+for (let i = 0; i < multidimensional.length; i++) {
+  for (let j = 0; j < multidimensional[i].length; j++) {
+    // console.log(multidimensional[i][j]);
+  }
+}
+
+/*
+  Tablice multidemnsional są użyteczne w połączeniu z innymi strukturami i ich algorytmami, np z grafem.
+  Zazwyczaj zadania te skupiają się na albo przeszktałcaniu macierzy albo na wyszukiwaniu w nim danych.
+*/
+
+/*
+  4. Kadane's algorithm.
+
+  Jest to algorytm jeden z ważniejszych przy używaniu tablic, pozwala na znalezienie subarray sum albo innych takich rzeczy.
+*/
+
+const maxSubarraySum = (arr: number[], cons: number) => {
+  let MAX = 0;
+  let windowSum = 0;
+  let start = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    windowSum += arr[i];
+
+    if (i + 1 - start === cons) {
+      MAX = Math.max(MAX, windowSum);
+      windowSum -= arr[start];
+      start += 1;
+    }
+  }
+
+  return MAX;
+};
+
+maxSubarraySum([1, 2, 3, 4, 5], 2);
+
+/*
+  Minimum size subarray sum - zadanie z leetcode, dobry przykład na wykorzystanie sliding window pattern.
+*/
+
+const minimumSizeSubarraySum = (arr: number[], target: number) => {
+  let minimumSize = 0;
+  let start = 0;
+  let windowSum = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    windowSum += arr[i];
+
+    while (windowSum >= target) {
+      minimumSize = Math.min(i - start + 1);
+      windowSum -= arr[start];
+      start++;
+    }
+  }
+};
+
+minimumSizeSubarraySum([2, 3, 1, 2, 4, 3], 7);
+
+/*
+  5. Binary search
+
+  Pozwala na wyszukiwanie elementu w posortowanej tablicy w sposób O(log(n)).
+
+  Jest to dużo szybszy algorytm wyszukiwania elementu niż linear search, ale działa tylko na posortowanych liczbach.
+  Zawsze ilość kroków będzie się kończyła na 8 dlaczego?
+
+  Za każdym razem wybieramy środek w naszej tablicy i dzielimy na pół aż nie znajdziemy elementu, ot to cała historia! :D
+
+  */
+
+const binarySearch = (arr: number[], searchNum: number) => {
+  let start = 0;
+  let end = arr.length - 1;
+  let kroki = 0;
+
+  let mid;
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+    kroki++;
+
+    if (mid === searchNum) {
+      console.log({ znaleziony: mid, kroki });
+      return mid;
+    }
+    if (arr[mid] > searchNum) {
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
+  }
+
+  return -1;
+};
+
+binarySearch([1, 2, 3, 4, 5, 6, 7], 2);

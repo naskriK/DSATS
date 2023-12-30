@@ -341,11 +341,107 @@ function averagePair(items: number[], average: number) {
   return tempAverage === average;
 }
 
-function isSubsequence(s: string, b: string) {
-  // good luck. Add any arguments you deem necessary.
+function isSubsequence(a: string, b: string) {
+  let left = 0;
+  let right = 0;
+  let counter = 0;
+
+  if (!a) return true;
+
+  while (right < b.length) {
+    if (a[left] === b[right]) {
+      counter++;
+      left++;
+    }
+    right++;
+  }
+
+  return counter === a.length;
 }
 
-isSubsequence("hello", "hello world"); // true
-isSubsequence("sing", "sting"); // true
-isSubsequence("abc", "abracadabra"); // true
-isSubsequence("abc", "acb"); // false (order matters)
+function maxSubarraySumE(numbers: any[], k: number) {
+  if (numbers.length < k) return;
+
+  let MAX = Number.NEGATIVE_INFINITY;
+  let start = 0;
+  let windowSum = 0;
+
+  for (let i = 0; i < numbers.length; i++) {
+    windowSum += numbers[i];
+
+    if (i - start + 1 === k) {
+      MAX = Math.max(MAX, windowSum);
+      windowSum -= numbers[start];
+      start += 1;
+    }
+  }
+
+  return MAX;
+  // add whatever parameters you deem necessary - good luck!
+}
+
+function minSubArrayLen(numbers: any[], target: any) {
+  let start = 0;
+  let windowSum = 0;
+  let min = 0;
+
+  for (let i = 0; i < numbers.length; i++) {
+    windowSum += numbers[i];
+    while (windowSum >= target) {
+      min = Math.min(i - start + 1);
+      windowSum -= numbers[start];
+      start++;
+    }
+  }
+
+  return min;
+}
+
+minSubArrayLen([2, 3, 1, 2, 4, 3], 7); // 2 -> because [4,3] is the smallest subarray
+// minSubArrayLen([2, 1, 6, 5, 4], 9); // 2 -> because [5,4] is t
+// minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 95); // 0
+
+function findLongestSubstringE(s: string) {
+  let dict: Record<string, number> = {};
+  let start = 0;
+  let end = 0;
+  let counter = 0;
+
+  while (end < s.length) {
+    const char = s[end];
+
+    if (char in dict) {
+      start = end;
+    }
+
+    dict[char] = end;
+    counter = Math.max(counter, end - start + 1);
+    end++;
+  }
+  console.log(dict);
+  console.log(counter);
+}
+
+findLongestSubstringE("abcdggabd");
+
+// const findLongestSubstring = (s: string) => {
+//   const dict: Record<string, number> = {};
+//   let left = 0;
+//   let right = 0;
+//   let counter = 0;
+
+//   while (left < s.length && right < s.length) {
+//     const char = s[right];
+
+//     if (dict[char]) {
+//       left = Math.max(left, dict[char] + 1);
+//     }
+
+//     dict[char] = right;
+//     counter = Math.max(counter, right - left + 1);
+//     right++;
+//   }
+//   return counter;
+// };
+
+// findLongestSubstring("abcdggabd");

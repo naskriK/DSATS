@@ -265,3 +265,87 @@ const findLongestSubstring = (s: string) => {
 };
 
 findLongestSubstring("abcdggabd");
+
+/*
+
+  Zadania z kursu
+
+  Frequency Counter
+
+*/
+
+function sameFrequency(a: number, b: number) {
+  const firstFrequency: Record<number, number> = {};
+  const secondFrequency: Record<number, number> = {};
+
+  while (a > 0) {
+    const lastDigit = a % 10;
+    if (firstFrequency[lastDigit]) {
+      firstFrequency[lastDigit]++;
+    } else {
+      firstFrequency[lastDigit] = 1;
+    }
+    a = Math.floor(a / 10);
+  }
+
+  while (b > 0) {
+    const lastDigit = b % 10;
+    if (secondFrequency[lastDigit]) {
+      secondFrequency[lastDigit]++;
+    } else {
+      secondFrequency[lastDigit] = 1;
+    }
+    b = Math.floor(b / 10);
+  }
+
+  for (const [item, key] of Object.entries(firstFrequency)) {
+    const hasItem = secondFrequency[Number(item)];
+    if (!hasItem) return false;
+
+    if (secondFrequency[Number(item)] !== key) return false;
+
+    return true;
+  }
+}
+
+function areThereDuplicates<T>(...items: T[]) {
+  let isDuplicate = false;
+
+  for (let i = 0; i < items.length; i++) {
+    isDuplicate = items.indexOf(items[i]) !== items.lastIndexOf(items[i]);
+  }
+  return isDuplicate;
+}
+
+function averagePair(items: number[], average: number) {
+  if (items.length < 2) return false;
+
+  let tempAverage = 0;
+  let left = 0;
+  let right = items.length - 1;
+
+  while (tempAverage !== average) {
+    let temp = (items[left] + items[right]) / 2;
+    if (temp > average) {
+      right--;
+    }
+    if (temp < average) {
+      left++;
+    }
+
+    if (left === right) break;
+
+    tempAverage = temp;
+  }
+
+  return tempAverage === average;
+}
+
+function isSubsequence(s: string, b: string) {
+  // good luck. Add any arguments you deem necessary.
+}
+
+isSubsequence("hello", "hello world"); // true
+isSubsequence("sing", "sting"); // true
+isSubsequence("abc", "abracadabra"); // true
+isSubsequence("abc", "acb"); // false (order matters)

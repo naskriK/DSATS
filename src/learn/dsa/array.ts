@@ -214,7 +214,6 @@ const binarySearch = (arr: number[], searchNum: number) => {
     kroki++;
 
     if (mid === searchNum) {
-      console.log({ znaleziony: mid, kroki });
       return mid;
     }
     if (arr[mid] > searchNum) {
@@ -228,3 +227,41 @@ const binarySearch = (arr: number[], searchNum: number) => {
 };
 
 binarySearch([1, 2, 3, 4, 5, 6, 7], 2);
+
+/*
+
+  Z zadań o windows pattern zrobimy jeszcze najdłuższy podciąg
+
+  "abcbccabcdce" => 3/abc
+
+  Zasada działania opiera się o dictionary - słownik - obiekt.
+
+  Ustawiamy zmienną left i right na 0 które będą naszymi pointerami w stringu.
+
+  Pobieramy znak i sprawdzamy czy jest on w naszym obiekcie, jeżeli jest to przestawiamy zmienną left
+
+  Jeżeli nie to przestawiamy naszą zmienną right o 1 pole do przodu
+
+*/
+
+const findLongestSubstring = (s: string) => {
+  const dict: Record<string, number> = {};
+  let left = 0;
+  let right = 0;
+  let counter = 0;
+
+  while (left < s.length && right < s.length) {
+    const char = s[right];
+
+    if (dict[char]) {
+      left = Math.max(left, dict[char] + 1);
+    }
+
+    dict[char] = right;
+    counter = Math.max(counter, right - left + 1);
+    right++;
+  }
+  return counter;
+};
+
+findLongestSubstring("abcdggabd");

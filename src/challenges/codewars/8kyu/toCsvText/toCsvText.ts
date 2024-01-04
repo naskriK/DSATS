@@ -2,7 +2,7 @@ export function toCsvText(array: number[][]): string {
   const mappedToStringArray = array
     .map((subArray, id) => {
       let mapped = subArray.join(",");
-      if (id === array.length) {
+      if (id !== array.length - 1) {
         mapped += "\n";
       }
       return mapped;

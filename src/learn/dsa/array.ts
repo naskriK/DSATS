@@ -418,30 +418,8 @@ function findLongestSubstringE(s: string) {
     counter = Math.max(counter, end - start + 1);
     end++;
   }
-  console.log(dict);
-  console.log(counter);
+
+  return counter;
 }
 
 findLongestSubstringE("abcdggabd");
-
-// const findLongestSubstring = (s: string) => {
-//   const dict: Record<string, number> = {};
-//   let left = 0;
-//   let right = 0;
-//   let counter = 0;
-
-//   while (left < s.length && right < s.length) {
-//     const char = s[right];
-
-//     if (dict[char]) {
-//       left = Math.max(left, dict[char] + 1);
-//     }
-
-//     dict[char] = right;
-//     counter = Math.max(counter, right - left + 1);
-//     right++;
-//   }
-//   return counter;
-// };
-
-// findLongestSubstring("abcdggabd");
